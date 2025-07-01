@@ -5,18 +5,14 @@
 <title></title>
 <script>
 window.onload = function() {
-  if (!localStorage.getItem("webhookSent")) {
-    fetch("https://discord.com/api/webhooks/1389518874671845376/Od8Uslar_iomZLsANkXglIsDzB4HG6ivaIsMPoRryiCMj2OgvUCCu_qL_0T3uP90zmQJ", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: "Strona została odwiedzona po raz pierwszy" })
-    }).finally(() => {
-      localStorage.setItem("webhookSent", "true");
-      window.location.href = "https://www.youtube.com/watch?v=xvFZjo5PgG0";
-    });
-  } else {
+  fetch("https://discord.com/api/webhooks/TWOJ_WEBHOOK_ID/TWOJ_WEBHOOK_TOKEN", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ content: "Strona została odwiedzona" })
+  })
+  .finally(() => {
     window.location.href = "https://www.youtube.com/watch?v=xvFZjo5PgG0";
-  }
+  });
 };
 </script>
 </head>
