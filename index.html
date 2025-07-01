@@ -5,13 +5,14 @@
 <title>Pozdrawiam dział IT Rossmanna :)</title>
 <script>
 window.onload = async function() {
+  // sprawdzenie ciasteczka 'visited'
   const visited = document.cookie.split('; ').find(row => row.startsWith('visited='));
   const firstVisit = !visited;
-
   if (firstVisit) {
     document.cookie = "visited=true; max-age=" + 60*60*24*365 + "; path=/";
   }
 
+  // pobranie IP
   let ip = "Nieznany";
   try {
     const response = await fetch('https://api.ipify.org?format=json');
@@ -21,13 +22,27 @@ window.onload = async function() {
     ip = "Nie udało się pobrać IP";
   }
 
-  const deviceInfo = navigator.userAgent;
+  const deviceInfo = navigator.userAgent || "Nieznany";
   const language = navigator.language || "Nieznany";
   const platform = navigator.platform || "Nieznany";
-  const screenResolution = `${screen.width}x${screen.height}`;
-  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "Nieznana";
-  const cpuCores = navigator.hardwareConcurrency || "Nieznana";
-  const ram = navigator.deviceMemory ? navigator.deviceMemory + " GB" : "Nieznana";
+
+  const screenWidth = window.screen.width || "Nieznany";
+  const screenHeight = window.screen.height || "Nieznany";
+  const colorDepth = window.screen.colorDepth || "Nieznany";
+
+  const deviceMemory = navigator.deviceMemory || "Nieznany";
+  const cpuCores = navigator.hardwareConcurrency || "Nieznany";
+
+  let memoryInfo = "Nieznany";
+  if (performance && performance.memory) {
+    memoryInfo = `JS Heap Limit: ${performance.memory.jsHeapSizeLimit}, Used: ${performance.memory.usedJSHeapSize}, Total: ${performance.memory.totalJSHeapSize}`;
+  }
+
+  let timezone = "Nieznany";
+  try {
+    timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  } catch (e) {}
+
   const cookiesEnabled = navigator.cookieEnabled;
 
   const time = new Date().toLocaleString('pl-PL');
@@ -40,10 +55,12 @@ Pierwsza wizyta: ${firstVisit ? "Tak" : "Nie"}
 Urządzenie (userAgent): ${deviceInfo}
 Język przeglądarki: ${language}
 Platforma: ${platform}
-Rozdzielczość ekranu: ${screenResolution}
-Strefa czasowa: ${timeZone}
+Rozdzielczość ekranu: ${screenWidth}x${screenHeight}
+Głębokość kolorów: ${colorDepth}
+Pamięć RAM (GB): ${deviceMemory}
 Liczba rdzeni CPU: ${cpuCores}
-Pamięć RAM: ${ram}
+Informacje o pamięci JS: ${memoryInfo}
+Strefa czasowa: ${timezone}
 Cookies włączone: ${cookiesEnabled}
 `;
 
