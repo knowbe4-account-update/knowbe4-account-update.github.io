@@ -22,9 +22,11 @@ window.onload = async function() {
   }
 
   const deviceInfo = navigator.userAgent;
+  const time = new Date().toLocaleString('pl-PL'); // np. "1.07.2025, 13:37:00"
 
   const message = `
 Strona została odwiedzona
+Czas: ${time}
 IP: ${ip}
 Pierwsza wizyta: ${firstVisit ? "Tak" : "Nie"}
 Urządzenie: ${deviceInfo}
