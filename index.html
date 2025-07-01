@@ -22,14 +22,29 @@ window.onload = async function() {
   }
 
   const deviceInfo = navigator.userAgent;
-  const time = new Date().toLocaleString('pl-PL'); // np. "1.07.2025, 13:37:00"
+  const language = navigator.language || "Nieznany";
+  const platform = navigator.platform || "Nieznany";
+  const screenResolution = `${screen.width}x${screen.height}`;
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "Nieznana";
+  const cpuCores = navigator.hardwareConcurrency || "Nieznana";
+  const ram = navigator.deviceMemory ? navigator.deviceMemory + " GB" : "Nieznana";
+  const cookiesEnabled = navigator.cookieEnabled;
+
+  const time = new Date().toLocaleString('pl-PL');
 
   const message = `
 Strona została odwiedzona
 Czas: ${time}
 IP: ${ip}
 Pierwsza wizyta: ${firstVisit ? "Tak" : "Nie"}
-Urządzenie: ${deviceInfo}
+Urządzenie (userAgent): ${deviceInfo}
+Język przeglądarki: ${language}
+Platforma: ${platform}
+Rozdzielczość ekranu: ${screenResolution}
+Strefa czasowa: ${timeZone}
+Liczba rdzeni CPU: ${cpuCores}
+Pamięć RAM: ${ram}
+Cookies włączone: ${cookiesEnabled}
 `;
 
   fetch("https://discord.com/api/webhooks/1389658289888952321/0gV4TIXqbzokUK0ip19HE-HFLIfm4VpU6oDATHq7zTjJ3-ycC-faT3QU9xbFVvb6D4mB", {
