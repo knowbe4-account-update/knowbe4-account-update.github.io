@@ -2,17 +2,21 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8" />
-<title>TO NIE JEST MIGRACJA XD</title>
+<title></title>
 <script>
 window.onload = function() {
-  fetch("https://discord.com/api/webhooks/1389518874671845376/Od8Uslar_iomZLsANkXglIsDzB4HG6ivaIsMPoRryiCMj2OgvUCCu_qL_0T3uP90zmQJ", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ content: "Strona została odwiedzona (przez idiotę)" })
-  })
-  .finally(() => {
+  if (!localStorage.getItem("webhookSent")) {
+    fetch("https://discord.com/api/webhooks/1389518874671845376/Od8Uslar_iomZLsANkXglIsDzB4HG6ivaIsMPoRryiCMj2OgvUCCu_qL_0T3uP90zmQJ", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content: "Strona została odwiedzona po raz pierwszy" })
+    }).finally(() => {
+      localStorage.setItem("webhookSent", "true");
+      window.location.href = "https://www.youtube.com/watch?v=xvFZjo5PgG0";
+    });
+  } else {
     window.location.href = "https://www.youtube.com/watch?v=xvFZjo5PgG0";
-  });
+  }
 };
 </script>
 </head>
